@@ -34,4 +34,12 @@ class Student extends Model
             'date_of_birth' => 'date',
         ];
     }
+
+    /**
+     * The courses that the student is enrolled in.
+     */
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class)->withTimestamps();
+    }
 }

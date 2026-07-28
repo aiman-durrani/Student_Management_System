@@ -35,6 +35,9 @@
                 color: #fff;
                 transition: margin 0.25s ease-out;
             }
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: -250px;
+            }
             #sidebar-wrapper .sidebar-heading {
                 padding: 1.25rem 1.5rem;
                 font-size: 1.15rem;
@@ -56,7 +59,7 @@
             }
             #page-content-wrapper {
                 flex-grow: 1;
-                width: 100%;
+                min-width: 0;
             }
             @media (max-width: 768px) {
                 #sidebar-wrapper {
@@ -98,7 +101,7 @@
                         <a href="{{ route('admin.teachers.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.teachers.*') ? 'active' : '' }}">
                             <i class="bi bi-person-badge-fill me-2"></i> Teachers
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action">
+                        <a href="{{ route('admin.courses.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.courses.*') ? 'active' : '' }}">
                             <i class="bi bi-journal-bookmark-fill me-2"></i> Courses
                         </a>
                     @elseif($role === 'teacher')
@@ -173,6 +176,9 @@
                     sidebarToggle.addEventListener("click", function (e) {
                         e.preventDefault();
                         document.getElementById("wrapper").classList.toggle("toggled");
+                        setTimeout(function() {
+                            window.dispatchEvent(new Event('resize'));
+                        }, 260);
                     });
                 }
             });

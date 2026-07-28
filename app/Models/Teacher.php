@@ -22,4 +22,12 @@ class Teacher extends Model
         'phone',
         'address',
     ];
+
+    /**
+     * Get the courses taught by the teacher.
+     */
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
 }
