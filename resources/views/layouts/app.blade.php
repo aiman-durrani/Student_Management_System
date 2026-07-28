@@ -95,7 +95,7 @@
                         <a href="{{ route('admin.students.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.students.*') ? 'active' : '' }}">
                             <i class="bi bi-people-fill me-2"></i> Students
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action">
+                        <a href="{{ route('admin.teachers.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.teachers.*') ? 'active' : '' }}">
                             <i class="bi bi-person-badge-fill me-2"></i> Teachers
                         </a>
                         <a href="#" class="list-group-item list-group-item-action">
