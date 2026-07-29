@@ -36,4 +36,20 @@ class Course extends Model
     {
         return $this->belongsToMany(Student::class)->withTimestamps();
     }
+
+    /**
+     * Get the attendance records for the course.
+     */
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    /**
+     * Get the grade records for the course.
+     */
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
+    }
 }

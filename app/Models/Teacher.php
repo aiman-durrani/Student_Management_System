@@ -15,6 +15,7 @@ class Teacher extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
         'name',
         'email',
         'employee_id',
@@ -22,6 +23,14 @@ class Teacher extends Model
         'phone',
         'address',
     ];
+
+    /**
+     * Get the user that owns the teacher record.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Get the courses taught by the teacher.

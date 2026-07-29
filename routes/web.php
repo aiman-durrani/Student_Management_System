@@ -4,6 +4,14 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Teacher\TeacherDashboardController;
+use App\Http\Controllers\Teacher\TeacherCourseController;
+use App\Http\Controllers\Teacher\AttendanceController;
+use App\Http\Controllers\Teacher\GradeController;
+use App\Http\Controllers\Student\StudentDashboardController;
+use App\Http\Controllers\Student\StudentProfileController;
+use App\Http\Controllers\Student\StudentAttendanceController;
+use App\Http\Controllers\Student\StudentGradeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,15 +38,21 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('teacher.dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', [TeacherDashboardController::class, 'index'])->name('dashboard');
+    Route::get('courses/{course}', [TeacherCourseController::class, 'show'])->name('courses.show');
+    Route::get('courses/{course}/attendance', [AttendanceController::class, 'index'])->name('courses.attendance.index');
+    Route::get('courses/{course}/attendance/create', [AttendanceController::class, 'create'])->name('courses.attendance.create');
+    Route::post('courses/{course}/attendance', [AttendanceController::class, 'store'])->name('courses.attendance.store');
+    Route::get('courses/{course}/grades', [GradeController::class, 'index'])->name('courses.grades.index');
+    Route::get('courses/{course}/grades/create', [GradeController::class, 'create'])->name('courses.grades.create');
+    Route::post('courses/{course}/grades', [GradeController::class, 'store'])->name('courses.grades.store');
 });
 
 Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('student.dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
+    Route::get('profile', [StudentProfileController::class, 'show'])->name('profile.show');
+    Route::get('attendance', [StudentAttendanceController::class, 'index'])->name('attendance.index');
+    Route::get('grades', [StudentGradeController::class, 'index'])->name('grades.index');
 });
 
 Route::middleware('auth')->group(function () {

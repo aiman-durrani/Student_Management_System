@@ -15,6 +15,7 @@ class Student extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
         'name',
         'email',
         'roll_number',
@@ -22,6 +23,14 @@ class Student extends Model
         'phone',
         'address',
     ];
+
+    /**
+     * Get the user that owns the student record.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Get the attributes that should be cast.
@@ -41,5 +50,21 @@ class Student extends Model
     public function courses()
     {
         return $this->belongsToMany(Course::class)->withTimestamps();
+    }
+
+    /**
+     * Get the attendance records for the student.
+     */
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    /**
+     * Get the grade records for the student.
+     */
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
     }
 }

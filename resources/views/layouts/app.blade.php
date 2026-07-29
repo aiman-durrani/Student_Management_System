@@ -106,19 +106,31 @@
                         </a>
                     @elseif($role === 'teacher')
                         <div class="px-3 pt-3 pb-1 text-uppercase text-muted fw-bold" style="font-size: 0.75rem;">Teacher Menu</div>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="bi bi-journal-check me-2"></i> My Classes
+                        <a href="{{ route('teacher.dashboard') }}" class="list-group-item list-group-item-action {{ request()->routeIs('teacher.dashboard') ? 'active' : '' }}">
+                            <i class="bi bi-journal-bookmark-fill me-2"></i> My Assigned Courses
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="bi bi-card-checklist me-2"></i> Attendance
-                        </a>
+                        @if(isset($course) && $course instanceof \App\Models\Course)
+                            <div class="px-3 pt-3 pb-1 text-uppercase text-muted fw-bold" style="font-size: 0.75rem;">Course: {{ $course->code }}</div>
+                            <a href="{{ route('teacher.courses.show', $course) }}" class="list-group-item list-group-item-action {{ request()->routeIs('teacher.courses.show') ? 'active' : '' }}">
+                                <i class="bi bi-journal-text me-2"></i> Roster & Details
+                            </a>
+                            <a href="{{ route('teacher.courses.attendance.index', $course) }}" class="list-group-item list-group-item-action {{ request()->routeIs('teacher.courses.attendance.*') ? 'active' : '' }}">
+                                <i class="bi bi-calendar-check me-2"></i> Attendance
+                            </a>
+                            <a href="{{ route('teacher.courses.grades.index', $course) }}" class="list-group-item list-group-item-action {{ request()->routeIs('teacher.courses.grades.*') ? 'active' : '' }}">
+                                <i class="bi bi-award me-2"></i> Grades
+                            </a>
+                        @endif
                     @else
                         <div class="px-3 pt-3 pb-1 text-uppercase text-muted fw-bold" style="font-size: 0.75rem;">Student Menu</div>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="bi bi-book me-2"></i> My Courses
+                        <a href="{{ route('student.profile.show') }}" class="list-group-item list-group-item-action {{ request()->routeIs('student.profile.*') ? 'active' : '' }}">
+                            <i class="bi bi-person-badge me-2"></i> My Profile
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action">
-                            <i class="bi bi-award me-2"></i> Grades
+                        <a href="{{ route('student.attendance.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('student.attendance.*') ? 'active' : '' }}">
+                            <i class="bi bi-calendar-check me-2"></i> My Attendance
+                        </a>
+                        <a href="{{ route('student.grades.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('student.grades.*') ? 'active' : '' }}">
+                            <i class="bi bi-award me-2"></i> My Grades
                         </a>
                     @endif
 
