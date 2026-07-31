@@ -1,59 +1,141 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Student Management System (SMS)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A role-based Student Management System built with **Laravel 11** and **Bootstrap 5**, developed as a hands-on project to learn core Laravel concepts — MVC architecture, routing, Eloquent relationships, migrations, validation, middleware, and Blade templating.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## About the Project
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project simulates a real-world school/college management system with three distinct user roles — **Admin**, **Teacher**, and **Student** — each with its own dashboard and permissions. It was built incrementally, starting from authentication and role-based access control, then layering in full CRUD modules, relational data (courses, enrollments), and finally attendance and grading features.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Admin
+- Secure login/registration with role-based access control
+- Full CRUD for Students, Teachers, and Courses
+- Assign teachers to courses and enroll students (many-to-many)
+- Search and pagination on all management tables
+- Dashboard with live stats (total students/teachers/courses), a Chart.js bar chart of top courses by enrollment, and recent activity widgets
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Teacher
+- Dashboard showing only their own assigned courses
+- Mark daily attendance (present / absent / late) per course
+- Enter and manage grades per assessment (e.g. Midterm, Assignment 1)
+- Attendance breakdown chart per course
 
-## Laravel Sponsors
+### Student
+- Read-only dashboard with enrolled courses and quick stats
+- View own profile
+- View own attendance history with per-course percentage
+- View own grades with per-course average and progress bars
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### General
+- Role-based middleware — every route is protected by both authentication and role
+- Flash messages (success/error alerts) on all create/update/delete actions
+- Form re-population on validation errors
+- Responsive Bootstrap 5 UI across all pages
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Tech Stack
 
-## Contributing
+| Layer | Technology |
+|---|---|
+| Backend | Laravel 11 (PHP) |
+| Frontend | Blade templates + Bootstrap 5 |
+| Database | MySQL |
+| Auth | Laravel Breeze |
+| Charts | Chart.js |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## Database Structure (Simplified)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+users (id, name, email, password, role)
+students (id, user_id, name, email, roll_number, date_of_birth, phone, address)
+teachers (id, user_id, name, email, employee_id, subject, phone, address)
+courses (id, name, code, teacher_id, description)
+course_student (course_id, student_id)      -- enrollment pivot
+attendances (id, course_id, student_id, date, status)
+grades (id, course_id, student_id, assessment_name, marks_obtained, total_marks)
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Screenshots
+
+### Auth
+
+| Login Page | Register Page |
+|---|---|
+| ![Login Page](screenshots/login.png) | ![Register Page](screenshots/register.png) |
+
+### Admin
+
+| Admin Dashboard | Profile Settings |
+|---|---|
+| ![Admin Dashboard](screenshots/admin-dashbaord.png) | ![Profile Settings](screenshots/profile-setting.png) |
+
+| Add Student | Students Management |
+|---|---|
+| ![Add Student](screenshots/add-student.png) | ![Students Page](screenshots/student-dashboard.png) |
+
+### Teacher
+
+| Teacher Dashboard | Manage Course |
+|---|---|
+| ![Teacher Dashboard](screenshots/teacher-dashbaord.png) | ![Teacher Manage Course](screenshots/course.png) |
+
+### Student
+
+| Attendance | Grades |
+|---|---|
+| ![Attendance Page](screenshots/attendance.png) | ![Student Grades](screenshots/grades.png) |
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/student-management-system.git
+cd student-management-system
+
+# Install PHP dependencies
+composer install
+
+# Install JS dependencies
+npm install
+npm run build
+
+# Environment setup
+cp .env.example .env
+php artisan key:generate
+
+# Configure your database in .env, then run migrations
+php artisan migrate
+
+# (Optional) Seed sample data
+php artisan db:seed
+
+# Serve the application
+php artisan serve
+```
+
+Visit `http://127.0.0.1:8000` — you'll be redirected to the login page.
+
+---
+
+## Roadmap / Possible Future Additions
+
+- [ ] Email notifications for low attendance
+- [ ] Export attendance/grades to PDF or Excel
+- [ ] Teacher/Student profile editing
+- [ ] Admin ability to filter unassigned/empty courses directly from dashboard alerts
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is for personal learning purposes.

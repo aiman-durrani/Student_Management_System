@@ -14,6 +14,10 @@ class TeacherCourseController extends Controller
      */
     private function getTeacherRecord(): Teacher
     {
+        // Find the logged-in user's teacher record.
+       // First, search by user_id (preferred method).
+       // If not linked yet, search by matching email, then save the user_id 
+      // so future logins use the direct relationship.
         $user = auth()->user();
 
         $teacher = Teacher::where('user_id', $user->id)->first();
